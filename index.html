@@ -1,0 +1,603 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Numeral + Dots Worksheet and Flashcards</title>
+
+<style>
+  :root{ color-scheme: light; }
+  body{
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background:#fff;
+    color:#111;
+  }
+  .page{
+    padding: 18px 18px 28px 18px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  h1{
+    margin: 8px 0 8px 0;
+    text-align:center;
+    font-size: 28px;
+    font-weight: 800;
+  }
+  .note{
+    text-align:center;
+    font-size: 13px;
+    margin: 0 0 14px 0;
+    opacity: 0.85;
+  }
+
+  .panel{
+    border: 1px solid #bbb;
+    padding: 12px;
+    border-radius: 10px;
+    margin: 0 0 14px 0;
+  }
+
+  .grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .row{
+    display:flex;
+    align-items:center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 8px 0;
+  }
+
+  label{
+    font-size: 14px;
+  }
+
+  input[type="number"]{
+    width: 90px;
+    padding: 6px 8px;
+    font-size: 14px;
+  }
+
+  .btnRow{
+    display:flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+  }
+
+  button{
+    padding: 10px 12px;
+    font-size: 14px;
+    border: 1px solid #777;
+    background: #f6f6f6;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  button:hover{ background:#efefef; }
+
+  .seg{
+    display:inline-flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items:center;
+  }
+  .pill{
+    display:inline-flex;
+    align-items:center;
+    gap: 8px;
+    border: 1px solid #aaa;
+    border-radius: 999px;
+    padding: 6px 10px;
+    background:#fff;
+  }
+
+  .previewWrap{
+    display:grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .printArea{
+    border: 1px dashed #bbb;
+    border-radius: 10px;
+    padding: 12px;
+  }
+
+  .printHeader{
+    display:flex;
+    align-items:flex-end;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .titleBlock{
+    display:flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .docTitle{
+    font-size: 18px;
+    font-weight: 800;
+  }
+  .nameDate{
+    font-size: 14px;
+    display:flex;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .line{
+    display:inline-block;
+    min-width: 220px;
+    border-bottom: 1px solid #111;
+    height: 16px;
+    transform: translateY(-2px);
+  }
+
+  .sectionTitle{
+    font-weight: 800;
+    margin: 6px 0 10px 0;
+  }
+
+  .wsGrid{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 18px;
+  }
+  .problem{
+    border: 1px solid #d0d0d0;
+    border-radius: 10px;
+    padding: 10px;
+    min-height: 64px;
+    display:flex;
+    align-items:center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  .expr{
+    display:flex;
+    align-items:center;
+    gap: 10px;
+    font-size: 24px;
+    font-weight: 800;
+    line-height: 1;
+  }
+  .op{
+    font-size: 26px;
+    font-weight: 900;
+    padding: 0 2px;
+  }
+  .answerBox{
+    width: 90px;
+    height: 36px;
+    border-bottom: 2px solid #111;
+  }
+  .answerText{
+    font-size: 18px;
+    font-weight: 800;
+    min-width: 40px;
+    text-align:right;
+  }
+
+  .cardsGrid{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  .card{
+    border: 2px solid #111;
+    border-radius: 14px;
+    padding: 14px;
+    min-height: 150px;
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 10px;
+    break-inside: avoid;
+  }
+  .cardExpr{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap: 12px;
+    font-size: 44px;
+    font-weight: 900;
+    margin-top: 6px;
+  }
+  .cardAnswer{
+    display:flex;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 800;
+    opacity: 0.9;
+    min-height: 22px;
+  }
+
+  .muted{
+    font-size: 12px;
+    opacity: 0.75;
+  }
+
+  .dotSvg{
+    display:inline-block;
+    vertical-align: middle;
+  }
+
+  @media print{
+    .panel{ display:none; }
+    .page{ padding: 0; max-width: none; }
+    .printArea{
+      border: none;
+      padding: 0;
+    }
+    .printHeader{
+      margin: 0 0 10px 0;
+      padding: 0 0 6px 0;
+      border-bottom: 1px solid #bbb;
+    }
+    .wsGrid{ gap: 8px 12px; }
+    .problem{ border: 1px solid #bbb; }
+    button{ display:none; }
+  }
+</style>
+</head>
+
+<body>
+<div class="page">
+  <h1>Numeral + Dots Worksheet and Flashcards</h1>
+  <div class="note">Creates expressions like 2 + (dots) and prints as a worksheet or flashcards</div>
+
+  <div class="panel">
+    <div class="grid">
+      <div>
+        <div class="row">
+          <label><strong>Mode</strong></label>
+          <div class="seg" role="group" aria-label="Mode">
+            <label class="pill"><input type="radio" name="mode" value="worksheet" checked /> Worksheet</label>
+            <label class="pill"><input type="radio" name="mode" value="flashcards" /> Flashcards</label>
+          </div>
+        </div>
+
+        <div class="row">
+          <label><strong>Operation</strong></label>
+          <div class="seg" role="group" aria-label="Operation">
+            <label class="pill"><input type="radio" name="op" value="+" checked /> +</label>
+            <label class="pill"><input type="radio" name="op" value="-" /> −</label>
+            <label class="pill"><input type="radio" name="op" value="×" /> ×</label>
+            <label class="pill"><input type="radio" name="op" value="÷" /> ÷</label>
+          </div>
+        </div>
+
+        <div class="row">
+          <label><strong>How many items</strong></label>
+          <label class="pill">Count <input id="count" type="number" min="1" max="60" value="20" /></label>
+          <label class="pill">Seed <input id="seed" type="number" min="0" max="999999" value="1" /></label>
+        </div>
+
+        <div class="row">
+          <label><strong>Numeral range</strong></label>
+          <label class="pill">Min <input id="aMin" type="number" min="0" max="50" value="0" /></label>
+          <label class="pill">Max <input id="aMax" type="number" min="0" max="50" value="10" /></label>
+        </div>
+
+        <div class="row">
+          <label><strong>Dot count range</strong></label>
+          <label class="pill">Min <input id="bMin" type="number" min="0" max="20" value="0" /></label>
+          <label class="pill">Max <input id="bMax" type="number" min="0" max="20" value="10" /></label>
+        </div>
+
+        <div class="row">
+          <label class="pill"><input id="nonNegative" type="checkbox" checked /> Keep results non negative (for subtraction)</label>
+          <label class="pill"><input id="integerDiv" type="checkbox" checked /> Whole number division only (for division)</label>
+        </div>
+
+        <div class="row">
+          <label><strong>Show answers</strong></label>
+          <div class="seg">
+            <label class="pill"><input id="showAnswers" type="checkbox" /> On worksheet</label>
+            <label class="pill"><input id="showCardAnswers" type="checkbox" /> On flashcards</label>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="row">
+          <label><strong>Dots</strong></label>
+          <div class="seg">
+            <label class="pill">Dot size <input id="dotR" type="number" min="3" max="18" value="7" /></label>
+            <label class="pill">Spacing <input id="dotGap" type="number" min="2" max="18" value="6" /></label>
+            <label class="pill">Max columns <input id="dotCols" type="number" min="3" max="10" value="5" /></label>
+          </div>
+        </div>
+
+        <div class="row">
+          <label><strong>Title</strong></label>
+          <label class="pill" style="flex:1; min-width: 260px;">
+            <input id="docTitle" type="text" value="Numeral + Dots Practice" style="width:100%; padding:6px 8px; font-size:14px; border: none; outline:none;" />
+          </label>
+        </div>
+
+        <div class="btnRow">
+          <button id="generateBtn" type="button">Generate</button>
+          <button id="clearBtn" type="button">Clear</button>
+          <button id="printBtn" type="button">Print</button>
+        </div>
+
+        <div class="muted" style="margin-top:10px;">
+          Notes<br>
+          Expressions are built as numeral, operation, dots. Answers are computed using the dot count as the second value.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="previewWrap">
+    <div class="printArea" id="output"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const $ = (id) => document.getElementById(id)
+
+  function getRadio(name){
+    const n = document.querySelector(`input[name="${name}"]:checked`)
+    return n ? n.value : null
+  }
+
+  function clampInt(v, lo, hi, fallback){
+    const x = Math.round(Number(v))
+    if(!isFinite(x)) return fallback
+    return Math.max(lo, Math.min(hi, x))
+  }
+
+  function mulberry32(seed){
+    let t = seed >>> 0
+    return function(){
+      t += 0x6D2B79F5
+      let r = Math.imul(t ^ (t >>> 15), 1 | t)
+      r ^= r + Math.imul(r ^ (r >>> 7), 61 | r)
+      return ((r ^ (r >>> 14)) >>> 0) / 4294967296
+    }
+  }
+
+  function randInt(rng, lo, hi){
+    return lo + Math.floor(rng() * (hi - lo + 1))
+  }
+
+  function compute(a, op, b){
+    if(op === "+") return a + b
+    if(op === "-") return a - b
+    if(op === "×") return a * b
+    if(op === "÷") return b === 0 ? null : (a / b)
+    return null
+  }
+
+  function makeDotSVG(count, r, gap, maxCols){
+    const c = Math.max(0, count)
+    const cols = Math.max(1, maxCols)
+    const colCount = Math.min(cols, Math.max(1, c))
+    const rows = Math.ceil(c / colCount)
+    const cell = (r * 2) + gap
+    const w = colCount * cell - gap
+    const h = rows * cell - gap
+
+    const circles = []
+    for(let i = 0; i < c; i++){
+      const col = i % colCount
+      const row = Math.floor(i / colCount)
+      const cx = col * cell + r
+      const cy = row * cell + r
+      circles.push(`<circle cx="${cx}" cy="${cy}" r="${r}" fill="#111"></circle>`)
+    }
+
+    return `
+      <svg class="dotSvg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" aria-label="${c} dots" role="img">
+        ${circles.join("")}
+      </svg>
+    `
+  }
+
+  function buildProblems(cfg){
+    const rng = mulberry32(cfg.seed)
+    const out = []
+    let guard = 0
+
+    while(out.length < cfg.count && guard < cfg.count * 200){
+      guard++
+
+      let a = randInt(rng, cfg.aMin, cfg.aMax)
+      let b = randInt(rng, cfg.bMin, cfg.bMax)
+
+      const op = cfg.op
+
+      if(op === "÷"){
+        if(cfg.integerDiv){
+          if(b === 0) continue
+          const q = randInt(rng, 0, Math.max(0, cfg.aMax))
+          a = q * b
+        } else {
+          if(b === 0) continue
+        }
+      }
+
+      if(op === "-" && cfg.nonNegative){
+        if(a - b < 0) continue
+      }
+
+      const ans = compute(a, op, b)
+      if(ans === null) continue
+
+      if(op === "÷" && cfg.integerDiv && Math.abs(ans - Math.round(ans)) > 1e-9) continue
+
+      out.push({ a, b, op, ans })
+    }
+
+    return out
+  }
+
+  function renderWorksheet(cfg, probs){
+    const title = escapeHtml(cfg.title || "Numeral + Dots Practice")
+    const showAns = cfg.showAnswers
+
+    const items = probs.map((p, idx) => {
+      const dots = makeDotSVG(p.b, cfg.dotR, cfg.dotGap, cfg.dotCols)
+      const ansHtml = showAns ? `<div class="answerText">${formatAnswer(p.op, p.ans)}</div>` : `<div class="answerBox"></div>`
+
+      return `
+        <div class="problem">
+          <div class="expr">
+            <span>${p.a}</span>
+            <span class="op">${p.op}</span>
+            <span>${dots}</span>
+          </div>
+          ${ansHtml}
+        </div>
+      `
+    }).join("")
+
+    return `
+      <div class="printHeader">
+        <div class="titleBlock">
+          <div class="docTitle">${title}</div>
+          <div class="muted">Numeral + dots as the second value</div>
+        </div>
+        <div class="nameDate">
+          <span>Name <span class="line"></span></span>
+          <span>Date <span class="line"></span></span>
+        </div>
+      </div>
+
+      <div class="sectionTitle">Worksheet</div>
+      <div class="wsGrid">
+        ${items}
+      </div>
+    `
+  }
+
+  function renderFlashcards(cfg, probs){
+    const title = escapeHtml(cfg.title || "Numeral + Dots Practice")
+    const showAns = cfg.showCardAnswers
+
+    const cards = probs.map((p) => {
+      const dots = makeDotSVG(p.b, cfg.dotR + 2, cfg.dotGap + 2, cfg.dotCols)
+      const ans = showAns ? `Answer ${formatAnswer(p.op, p.ans)}` : ""
+      return `
+        <div class="card">
+          <div class="cardExpr">
+            <span>${p.a}</span>
+            <span>${p.op}</span>
+            <span>${dots}</span>
+          </div>
+          <div class="cardAnswer">${escapeHtml(ans)}</div>
+        </div>
+      `
+    }).join("")
+
+    return `
+      <div class="printHeader">
+        <div class="titleBlock">
+          <div class="docTitle">${title}</div>
+          <div class="muted">Print and cut</div>
+        </div>
+        <div class="nameDate">
+          <span>Name <span class="line"></span></span>
+          <span>Date <span class="line"></span></span>
+        </div>
+      </div>
+
+      <div class="sectionTitle">Flashcards</div>
+      <div class="cardsGrid">
+        ${cards}
+      </div>
+    `
+  }
+
+  function formatAnswer(op, ans){
+    if(op === "÷"){
+      const rounded = Math.round(ans)
+      if(Math.abs(ans - rounded) < 1e-9) return String(rounded)
+      return String(Number(ans.toFixed(2)))
+    }
+    return String(ans)
+  }
+
+  function escapeHtml(s){
+    return String(s)
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;")
+      .replaceAll("'","&#39;")
+  }
+
+  function readConfig(){
+    const mode = getRadio("mode")
+    const op = getRadio("op")
+
+    const count = clampInt($("count").value, 1, 60, 20)
+    const seed = clampInt($("seed").value, 0, 999999, 1)
+
+    let aMin = clampInt($("aMin").value, 0, 50, 0)
+    let aMax = clampInt($("aMax").value, 0, 50, 10)
+    if(aMin > aMax){ const t=aMin; aMin=aMax; aMax=t }
+
+    let bMin = clampInt($("bMin").value, 0, 20, 0)
+    let bMax = clampInt($("bMax").value, 0, 20, 10)
+    if(bMin > bMax){ const t=bMin; bMin=bMax; bMax=t }
+
+    const nonNegative = $("nonNegative").checked
+    const integerDiv = $("integerDiv").checked
+
+    const showAnswers = $("showAnswers").checked
+    const showCardAnswers = $("showCardAnswers").checked
+
+    const dotR = clampInt($("dotR").value, 3, 18, 7)
+    const dotGap = clampInt($("dotGap").value, 2, 18, 6)
+    const dotCols = clampInt($("dotCols").value, 3, 10, 5)
+
+    const title = $("docTitle").value || "Numeral + Dots Practice"
+
+    return {
+      mode, op, count, seed,
+      aMin, aMax, bMin, bMax,
+      nonNegative, integerDiv,
+      showAnswers, showCardAnswers,
+      dotR, dotGap, dotCols,
+      title
+    }
+  }
+
+  function generate(){
+    const cfg = readConfig()
+    const probs = buildProblems(cfg)
+
+    const out = $("output")
+    if(probs.length === 0){
+      out.innerHTML = `<div class="muted">No items generated. Try widening ranges, turning off whole number division, or changing the seed.</div>`
+      return
+    }
+
+    if(cfg.mode === "worksheet"){
+      out.innerHTML = renderWorksheet(cfg, probs)
+    } else {
+      out.innerHTML = renderFlashcards(cfg, probs)
+    }
+  }
+
+  function clearAll(){
+    $("output").innerHTML = ""
+  }
+
+  $("generateBtn").addEventListener("click", generate)
+  $("clearBtn").addEventListener("click", clearAll)
+  $("printBtn").addEventListener("click", () => window.print())
+
+  generate()
+})()
+</script>
+</body>
+</html>
